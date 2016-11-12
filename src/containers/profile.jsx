@@ -1,46 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleBoolean } from '../actions';
+import { getTrades } from '../actions/trades';
 import ProfileContent from '../components/profile-content';
 
 class Profile extends Component {
-  constructor() {
-    super();
-
-    this.state = { text: 'Title' };
-
-    this.onChange = this.onChange.bind(this);
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onChange(event) {
-    this.setState({ text: event.target.value });
-  }
-
-  onClick() {
-    this.props.toggleBoolean();
+  componentWillMount() {
+    this.props.getTrades();
   }
 
   render() {
     const { profile } = this.props;
-    const { text } = this.state;
 
     return(
-      <ProfileContent
-        isOk={profile.isOk}
-        onChange={this.onChange}
-        title={text}
-        toggleBoolean={this.onClick}
-      />
+      <ProfileContent profile={profile} />
     );
   }
 }
-
-Profile.propTypes = {
-  profile: PropTypes.object.isRequired,
-  toggleBoolean: PropTypes.func.isRequired,
-};
 
 /**
 * Convert application state to props.
@@ -49,4 +25,4 @@ Profile.propTypes = {
 */
 const mapStateToProps = state => ({ profile: state.profile });
 
-export default connect(mapStateToProps, { toggleBoolean })(Profile);
+export default connect(mapStateToProps, { getTrades })(Profile);

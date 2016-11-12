@@ -1,29 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import TradeList from './trade-list';
 
 export default class ProfileContent extends Component {
   render() {
-    const {
-      isOk,
-      onChange,
-      title,
-      toggleBoolean,
-    } = this.props;
+    const { profile } = this.props;
 
     return (
       <div>
-        <h1>{title} ({`It's ${isOk}`})</h1>
-        <input onChange={onChange} value={title} />
-        <button onClick={toggleBoolean}>Toggle</button>
+        <h1>My trades</h1>
+        <button>Add new trade</button>
+
+        <TradeList trades={profile} />
       </div>
     );
   }
 }
 
-ProfileContent.propTypes = {
-  isOk: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  title: PropTypes.string.isRequired,
-  toggleBoolean: PropTypes.func.isRequired,
-};
-
-ProfileContent.defaultProps = { isOk: false };
+ProfileContent.propTypes = { profile: PropTypes.object.isRequired };
