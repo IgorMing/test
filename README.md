@@ -34,3 +34,7 @@ src
 └── utils
     └── connector.js
 ```
+Getting started
+===
+Install dependencies: `yarn install`
+Start application on 8080 port: `yarn start`
