@@ -16,16 +16,21 @@ The source code has this follow structure:
 ```
 src
 ├── actions
-│   └── index.js
+│   └── trades.js
 ├── components
-│   └── profile-content.jsx
+│   ├── profile-content.jsx
+│   ├── trade.jsx
+│   └── trade-list.jsx
 ├── constants
+│   ├── properties.js
 │   └── types.js
 ├── containers
 │   ├── app.jsx
 │   └── profile.jsx
 ├── index.jsx
-└── reducers
-    ├── index.js
-    └── profile.js
+├── reducers
+│   ├── index.js
+│   └── profile.js
+└── utils
+    └── connector.js
 ```
