@@ -1,6 +1,4 @@
-# REACT BASIC BOILERPLATE
-
-This is a simple boilerplate project. It contains the basic necessary when you need to begin a React project, using [Redux](http://redux.js.org/docs/basics/UsageWithReact.html) architecture.
+# TEST
 
 Small list of included things in the project
 ---
