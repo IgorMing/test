@@ -1,4 +1,8 @@
 module.exports = {
+  devServer: {
+    contentBase: './',
+    historyApiFallback: true,
+  },
   entry: [
     'babel-polyfill',
     './src/index.jsx',

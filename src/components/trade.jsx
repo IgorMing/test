@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
-export default class Trade extends Component {
+class Trade extends Component {
+  constructor(props) {
+    super(props);
+
+    this.edit = this.edit.bind(this);
+  }
+
+  edit() {
+    this.props.router.push('/manage-trades');
+  }
+
   formatDate(date) {
     const dateObj = new Date(date);
 
@@ -9,8 +20,8 @@ export default class Trade extends Component {
 
   render() {
     const {
-      id,
       date,
+      id,
       shares,
     } = this.props;
 
@@ -19,9 +30,11 @@ export default class Trade extends Component {
         <li>
           Value: {shares} ({this.formatDate(date)})
         </li>
-        <button>Edit</button>
+        <button onClick={this.edit}>Edit</button>
         <button>Delete</button>
       </div>
     );
   }
 }
+
+export default withRouter(Trade);
