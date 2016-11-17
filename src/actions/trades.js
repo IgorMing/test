@@ -1,4 +1,4 @@
-import {
+  import {
   DELETE_TRADE,
   GET_TRADES,
   INSERT_TRADE,
