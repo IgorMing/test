@@ -6,27 +6,32 @@
   UPDATE_TRADE,
 } from '../constants/types';
 import { getConnection } from '../utils/connector';
+import $ from 'jquery';
+// import _ from 'lodash';
 
 export const getTrades = () => {
   return (dispatch) => {
-    const httpClient = getConnection();
+    $.ajax({
+      dataType: 'json',
+      type: ''
+      url: 'https://magnetis-trades.herokuapp.com/trades.json',
+      success: (response) => {
+        const { data } = response;
 
-    httpClient.get('/trades.json')
-    .then((response) => {
-      const { data } = response;
-
-      dispatch({
-        data,
-        type: GET_TRADES,
-      });
-    })
-    .catch((error) => {
-      dispatch({
-        error,
-        type: REQUEST_ERROR,
-      });
+        console.log(data);
+        dispatch({
+          data,
+          type: GET_TRADES,
+        });
+      }
     });
   };
+    // .catch((error) => {
+    //   dispatch({
+    //     error,
+    //     type: REQUEST_ERROR,
+    //   });
+    // });
 };
 
 export const updateTrade = (id, obj) => {
@@ -66,22 +71,24 @@ export const deleteTrade = (id) => {
   };
 };
 
-export const insertTrade = (obj) => {
-  return (dispatch) => {
-    const httpClient = getConnection();
+const insertTrade = (obj) => {
+  $.ajax({
+    data: obj,
+    dataType: 'json',
+    type: 'POST',
+    url: 'https://magnetis-trades.herokuapp.com/trades.json',
+    success: () => {
+      alert('Saved successfully!');
+    }
+  });
+};
 
-    httpClient.post(
-      '/trades.json',
-      obj
-    )
-    .then((response) => {
-      dispatch({ type: INSERT_TRADE });
-    })
-    .catch((error) => {
-      dispatch({
-        error,
-        type: REQUEST_ERROR,
-      });
-    });
-  };
+export const submit = (values) => {
+  const { trades } = values;
+
+  if(trades.length === 1) {
+    const obj = { trade: trades[0] };
+
+    insertTrade(obj);
+  }
 };
