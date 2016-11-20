@@ -1,78 +1,70 @@
-import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
-import { submit } from '../actions/trades';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getTradeById } from '../actions/trades';
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-      <input {...input} type={type} placeholder={label}/>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-)
+class ManageTrades extends Component {
+  constructor() {
+    super();
 
-const renderTrades = ({ fields, meta: { touched, error } }) => (
-  <ul>
-    <li>
-      <button type="button" onClick={() => fields.push({})}>Add trade</button>
-      {touched && error && <span>{error}</span>}
-    </li>
-    {fields.map((trade, index) =>
-      <li key={index}>
-        <button
-          type="button"
-          title="Remove trade"
-          onClick={() => fields.remove(index)}/>
-        <h4>Trade #{index + 1}</h4>
-        <Field
-          name={`${trade}.fund_id`}
-          type="text"
-          component={renderField}
-          label="Fund"
-        />
-        <Field
-          name={`${trade}.date`}
-          type="date"
-          component={renderField}
-          label="Date"
-        />
-        <Field
-          name={`${trade}.shares`}
-          type="text"
-          component={renderField}
-          label="Shares"
-        />
-        <Field
-          name={`${trade}.kind`}
-          type="number"
-          component={renderField}
-          label="Kind"
-        />
-      </li>
-    )}
-  </ul>
-)
+    this.handleBack = this.handleBack.bind(this);
+  }
 
-const FieldArraysForm = (props) => {
+  handleBack() {
+    console.log(this.props);
+    this.props.router.goBack();
+  }
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+  componentWillMount() {
+    const { id } = this.props.params;
 
-  return (
-    <form onSubmit={handleSubmit(submit)}>
-      <FieldArray name="trades" component={renderTrades} />
+    if (id) {
+      this.props.getTradeById(id);
+    }
+  }
+
+  componentDidUpdate() {
+    const { trades } = this.props;
+    const { date, fund_id, kind, shares } = trades;
+
+    this.refs.date.value = date;
+    this.refs.fund.value = fund_id;
+    this.refs.shares.value = shares;
+    this.refs.kind.value = kind;
+  }
+
+  render() {
+    return (
       <div>
-        <button type="submit" disabled={submitting}>
-          Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
-          Clear Values
-        </button>
+        <div>
+          <span>Fund</span>
+          <input ref="fund" />
+        </div>
+        <div>
+          <span>Date</span>
+          <input type="date" ref="date" />
+        </div>
+        <div>
+          <span>Shares</span>
+          <input ref="shares" />
+        </div>
+        <div>
+          <span>Kind</span>
+          <input type="number" ref="kind" />
+        </div>
+        <button>Save</button>
+        <button onClick={this.handleBack}>Back</button>
       </div>
-    </form>
-  );
+    );
+  }
+}
+
+/**
+* Convert application state to props.
+* @param {Object} state - Application state
+* @returns {Object} Updated props
+*/
+const mapStateToProps = (state) => {
+  return { trades: state.trades };
 };
 
-export default reduxForm({
-  form: 'fieldArrays'
-})(FieldArraysForm);
+export default connect(mapStateToProps, { getTradeById })(ManageTrades);

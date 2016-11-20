@@ -7,8 +7,8 @@ export default class TradeList extends Component {
   renderTrades() {
     const { trades } = this.props;
 
-    return _.map(trades, (trade) => {
-      return <Trade key={trade.id} {...trade} />;
+    return _.map(trades, (trade, index) => {
+      return <Trade key={index} {...trade} />;
     });
   }
 

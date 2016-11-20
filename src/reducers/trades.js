@@ -1,4 +1,4 @@
-import { GET_TRADES } from '../constants/types';
+import { GET_TRADES, GET_TRADE_BY_ID } from '../constants/types';
 
 const defaultState = {};
 
@@ -9,6 +9,7 @@ const defaultState = {};
 */
 export default function reducer (state = defaultState, action) {
     switch (action.type) {
+      case GET_TRADE_BY_ID:
       case GET_TRADES: {
         return {
           ...state,

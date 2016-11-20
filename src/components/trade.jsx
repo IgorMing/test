@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { deleteTrade } from '../actions/trades';
 
 class Trade extends Component {
   constructor(props) {
     super(props);
 
-    this.edit = this.edit.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  edit() {
-    this.props.router.push('/manage-trades');
+  handleEdit() {
+    const { id } = this.props;
+
+    this.props.router.push(`/manage-trades/${id}`);
+  }
+
+  handleDelete() {
+    const { id } = this.props;
+
+      this.props.deleteTrade(id);
   }
 
   formatDate(date) {
@@ -21,20 +32,31 @@ class Trade extends Component {
   render() {
     const {
       date,
+      fund_id,
       id,
+      kind,
       shares,
     } = this.props;
 
-    return(
+    return (
       <div>
-        <li>
-          Value: {shares} ({this.formatDate(date)})
-        </li>
-        <button onClick={this.edit}>Edit</button>
-        <button>Delete</button>
+        <div>
+          Fund: {fund_id}
+        </div>
+        <div>
+          Shares: {shares}
+        </div>
+        <div>
+          Date: {this.formatDate(date)}
+        </div>
+        <div>
+          Kind: {kind}
+        </div>
+        <button onClick={this.handleEdit}>Edit</button>
+        <button onClick={this.handleDelete}>Delete</button>
       </div>
     );
   }
 }
 
-export default withRouter(Trade);
+export default connect(null, { deleteTrade })(withRouter(Trade));

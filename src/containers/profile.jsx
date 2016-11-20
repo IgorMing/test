@@ -11,10 +11,10 @@ class Profile extends Component {
   }
 
   render() {
-    const { profile } = this.props;
+    const { trades } = this.props;
 
     return(
-      <ProfileContent profile={profile} />
+      <ProfileContent trades={trades} />
     );
   }
 }
@@ -24,6 +24,6 @@ class Profile extends Component {
 * @param {Object} state - Application state
 * @returns {Object} Updated props
 */
-const mapStateToProps = state => ({ profile: state.profile });
+const mapStateToProps = state => ({ trades: state.trades });
 
 export default connect(mapStateToProps, { getTrades })(Profile);

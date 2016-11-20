@@ -7,6 +7,7 @@ export const UPDATE_FUND = 'update-fund';
 // trades
 export const DELETE_TRADE = 'delete-trade';
 export const GET_TRADES = 'get-trades';
+export const GET_TRADE_BY_ID = 'get-trade-by-id';
 export const INSERT_TRADE = 'insert-trade';
 export const UPDATE_TRADE = 'update-trade';
 

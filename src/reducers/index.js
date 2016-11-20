@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import profile from './profile';
+import trades from './trades';
 
 export default combineReducers({
   form: formReducer,
-  profile,
+  trades,
 });
