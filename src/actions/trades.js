@@ -58,7 +58,6 @@ export const getTrades = () => {
 
 export const updateTrade = (id, obj) => {
   return (dispatch) => {
-    console.log('update');
     const httpClient = getConnection();
 
     httpClient.put(
@@ -101,7 +100,6 @@ export const deleteTrade = (id) => {
 
 export const insertTrade = (obj) => {
   return (dispatch) => {
-    console.log('insert');
     const httpClient = getConnection();
 
     httpClient.post('/trades', obj)
