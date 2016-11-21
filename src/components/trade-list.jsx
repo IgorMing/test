@@ -1,22 +1,52 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { withRouter } from 'react-router';
 import Trade from './trade';
 
-export default class TradeList extends Component {
+class TradeList extends Component {
+
   renderTrades() {
     const { trades } = this.props;
 
-    return _.map(trades, (trade, index) => {
-      return <Trade key={index} {...trade} />;
+    return _.map(trades.tradeList, (trade, index) => {
+      return (
+        <Trade
+          key={index}
+          {...trade}
+        />
+      );
     });
   }
 
   render() {
     return(
-      <ul>
-        {this.renderTrades()}
-      </ul>
+      <table className="striped">
+        <thead>
+          <tr>
+            <th>Fund</th>
+            <th>Shares</th>
+            <th>Date</th>
+            <th>Kind</th>
+            <th>Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.renderTrades()}
+        </tbody>
+      </table>
     );
   }
 }
+
+/**
+* Convert application state to props.
+* @param {Object} state - Application state
+* @returns {Object} Updated props
+*/
+const mapStateToProps = (state) => {
+  return { trades: state.trades };
+};
+
+export default connect(mapStateToProps)(withRouter(TradeList));

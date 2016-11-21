@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTradeById } from '../actions/trades';
+import { browserHistory } from 'react-router';
+import { getTradeById, insertTrade, updateTrade } from '../actions/trades';
 
 class ManageTrades extends Component {
   constructor() {
     super();
 
     this.handleBack = this.handleBack.bind(this);
+    this.submitClick = this.submitClick.bind(this);
   }
 
   handleBack() {
-    console.log(this.props);
-    this.props.router.goBack();
+    browserHistory.goBack();
   }
 
   componentWillMount() {
@@ -24,7 +25,7 @@ class ManageTrades extends Component {
 
   componentDidUpdate() {
     const { trades } = this.props;
-    const { date, fund_id, kind, shares } = trades;
+    const { date, fund_id, kind, shares } = trades.tradeById;
 
     this.refs.date.value = date;
     this.refs.fund.value = fund_id;
@@ -32,28 +33,64 @@ class ManageTrades extends Component {
     this.refs.kind.value = kind;
   }
 
+  submitClick(event) {
+    event.preventDefault();
+    const { id } = this.props.params;
+    const { date, fund, shares, kind } = this.refs;
+    const myObj = {
+      trade: {
+        date: date.value,
+        fund: fund.value,
+        kind: kind.value,
+        shares: shares.value,
+      }
+    };
+
+    if (id) {
+      this.props.updateTrade(id, myObj);
+
+      return;
+    }
+
+    this.props.insertTrade(myObj)
+  }
+
   render() {
+    const { params } = this.props;
+    const btnText = params.id ? 'Save' : 'Add';
+
     return (
-      <div>
+      <form onSubmit={this.submitClick} className="container">
+        <h3>Manage my trade</h3>
         <div>
           <span>Fund</span>
-          <input ref="fund" />
+          <input type="number" ref="fund" required/>
         </div>
         <div>
           <span>Date</span>
-          <input type="date" ref="date" />
+          <input type="date" ref="date" required/>
         </div>
         <div>
           <span>Shares</span>
-          <input ref="shares" />
+          <input ref="shares" required/>
         </div>
         <div>
           <span>Kind</span>
-          <input type="number" ref="kind" />
+          <input type="number" ref="kind" required/>
         </div>
-        <button>Save</button>
-        <button onClick={this.handleBack}>Back</button>
-      </div>
+        <button
+          type="submit"
+          className="waves-effect waves-light btn"
+        >
+          {btnText}
+        </button>
+        <button
+          className="waves-effect waves-light btn grey"
+          onClick={this.handleBack}
+        >
+          Back
+        </button>
+      </form>
     );
   }
 }
@@ -67,4 +104,8 @@ const mapStateToProps = (state) => {
   return { trades: state.trades };
 };
 
-export default connect(mapStateToProps, { getTradeById })(ManageTrades);
+export default connect(mapStateToProps, {
+  getTradeById,
+  insertTrade,
+  updateTrade,
+})(ManageTrades);

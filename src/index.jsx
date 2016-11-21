@@ -17,7 +17,7 @@ render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
       </Route>
-      <Route path="manage-trades/:id" component={ManageTrades} />
+      <Route path="manage-trades(/:id)" component={ManageTrades} />
     </Router>
   </Provider>,
   document.querySelector('#app')

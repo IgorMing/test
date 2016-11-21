@@ -1,6 +1,9 @@
 import { GET_TRADES, GET_TRADE_BY_ID } from '../constants/types';
 
-const defaultState = {};
+const defaultState = {
+  tradeList: {},
+  tradeById: {}
+};
 
 /**
 * @param {Object} state - Default aplication state
@@ -9,11 +12,16 @@ const defaultState = {};
 */
 export default function reducer (state = defaultState, action) {
     switch (action.type) {
-      case GET_TRADE_BY_ID:
       case GET_TRADES: {
         return {
           ...state,
-          ...action.data,
+          tradeList: action.data,
+        };
+      }
+      case GET_TRADE_BY_ID: {
+        return {
+          ...state,
+          tradeById: action.data,
         };
       }
       default: {

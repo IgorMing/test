@@ -39,22 +39,36 @@ class Trade extends Component {
     } = this.props;
 
     return (
-      <div>
-        <div>
+      <tr>
+        <td>
           Fund: {fund_id}
-        </div>
-        <div>
+        </td>
+        <td>
           Shares: {shares}
-        </div>
-        <div>
+        </td>
+        <td>
           Date: {this.formatDate(date)}
-        </div>
-        <div>
+        </td>
+        <td>
           Kind: {kind}
-        </div>
-        <button onClick={this.handleEdit}>Edit</button>
-        <button onClick={this.handleDelete}>Delete</button>
-      </div>
+        </td>
+        <td>
+          <button
+            className="waves-effect waves-light btn"
+            onClick={this.handleEdit}
+          >
+            Edit
+            <i className="material-icons right">edit</i>
+          </button>
+          <button
+            className="waves-effect waves-light btn red"
+            onClick={this.handleDelete}
+          >
+            Delete
+            <i className="material-icons right">delete</i>
+          </button>
+        </td>
+      </tr>
     );
   }
 }

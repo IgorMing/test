@@ -1,19 +1,35 @@
 import React, { Component, PropTypes } from 'react';
 import TradeList from './trade-list';
+import { withRouter } from 'react-router';
 
-export default class ProfileContent extends Component {
+class ProfileContent extends Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.props.router.push('/manage-trades');
+  }
+
   render() {
-    const { trades } = this.props;
-
     return (
       <div>
-        <h1>My trades</h1>
-        <button>Add new trade</button>
+        <h2>My trades</h2>
 
-        <TradeList trades={trades} />
+        <button
+          className="waves-effect waves-light btn"
+          onClick={this.handleClick}
+        >
+          New trade
+          <i className="material-icons right">add</i>
+        </button>
+
+        <TradeList />
       </div>
     );
   }
 }
 
-ProfileContent.propTypes = { trades: PropTypes.object.isRequired };
+export default withRouter(ProfileContent);

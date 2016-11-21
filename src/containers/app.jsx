@@ -4,8 +4,7 @@ import Profile from './profile';
 export default class App extends Component {
   render() {
     return(
-      <div>
-        <h1>Trades</h1>
+      <div className="container">
         <Profile />
       </div>
     );

@@ -1,3 +1,4 @@
+import _ from 'lodash';
   import {
   DELETE_TRADE,
   GET_TRADES,
@@ -7,20 +8,21 @@
   UPDATE_TRADE,
 } from '../constants/types';
 import { getConnection } from '../utils/connector';
-import _ from 'lodash';
 
 export const getTradeById = (id) => {
   return (dispatch) => {
-    const instance = getConnection();
+    const httpClient = getConnection();
 
-    instance.get('/trades.json')
+    httpClient.get('/trades.json')
     .then((response) => {
       const { data } = response;
-      const objById = _.filter(data, (d) => { return d.id === Number(id) });
+      const objById = _.filter(data, (eachData) => {
+        return eachData.id === Number(id);
+      });
 
       dispatch({
         data: objById[0],
-        type: GET_TRADE_BY_ID
+        type: GET_TRADE_BY_ID,
       });
     })
     .catch((error) => {
@@ -34,16 +36,16 @@ export const getTradeById = (id) => {
 
 export const getTrades = () => {
   return (dispatch) => {
-    const instance = getConnection();
+    const httpClient = getConnection();
 
-    instance.get('/trades.json')
+    httpClient.get('/trades.json')
     .then((response) => {
       const { data } = response;
 
       dispatch({
         data,
-        type: GET_TRADES
-      })
+        type: GET_TRADES,
+      });
     })
     .catch((error) => {
       dispatch({
@@ -56,14 +58,20 @@ export const getTrades = () => {
 
 export const updateTrade = (id, obj) => {
   return (dispatch) => {
-    const instance = getConnection();
+    console.log('update');
+    const httpClient = getConnection();
 
-    instance.put(
-      `/trades/:${id}.json`,
+    httpClient.put(
+      `/trades/${id}.json`,
       obj
     )
     .then((response) => {
-      dispatch({ type: UPDATE_TRADE });
+      const { data } = response;
+
+      dispatch({
+        data,
+        type: UPDATE_TRADE,
+      });
     })
     .catch((error) => {
       dispatch({
@@ -76,15 +84,13 @@ export const updateTrade = (id, obj) => {
 
 export const deleteTrade = (id) => {
   return (dispatch) => {
-    const instance = getConnection();
+    const httpClient = getConnection();
 
-    instance.delete(`/trades/${id}.json`)
-    .then((response) => {
-      console.log('súcesso?');
+    httpClient.delete(`/trades/${id}.json`)
+    .then(() => {
       dispatch({ type: DELETE_TRADE });
     })
     .catch((error) => {
-      console.log('erro?', error);
       dispatch({
         error,
         type: REQUEST_ERROR,
@@ -93,8 +99,19 @@ export const deleteTrade = (id) => {
   };
 };
 
-const insertTrade = (obj) => {
+export const insertTrade = (obj) => {
   return (dispatch) => {
-    dispatch({ type: INSERT_TRADE });
-  }
+    console.log('insert');
+    const httpClient = getConnection();
+
+    httpClient.post('/trades', obj)
+    .then((response) => {
+      const { data } = response;
+
+      dispatch({
+        data,
+        type: INSERT_TRADE,
+      });
+    });
+  };
 };
