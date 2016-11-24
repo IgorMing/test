@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import { FormattedDate } from 'react-intl';
 import { connect } from 'react-redux';
 import { deleteTrade } from '../actions/trades';
 
@@ -47,7 +48,14 @@ class Trade extends Component {
           Shares: {shares}
         </td>
         <td>
-          Date: {this.formatDate(date)}
+          Date: {
+            <FormattedDate
+              value={new Date()}
+              year="numeric"
+              month="numeric"
+              day="numeric"
+            />
+          }
         </td>
         <td>
           Kind: {kind}
