@@ -38,3 +38,5 @@ Getting started
 Install dependencies: `yarn install`
 
 Start application on 8080 port: `yarn start`
+
+Live at (here)(http://104.236.45.255/)
