@@ -16,7 +16,7 @@ class ProfileContent extends Component {
   render() {
     return (
       <div>
-        <h2>My trades</h2>
+        <h3>My trades</h3>
 
         <button
           className="waves-effect waves-light btn"

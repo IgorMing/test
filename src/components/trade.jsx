@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedNumber } from 'react-intl';
 import { connect } from 'react-redux';
 import { deleteTrade } from '../actions/trades';
 
@@ -24,12 +24,6 @@ class Trade extends Component {
       this.props.deleteTrade(id);
   }
 
-  formatDate(date) {
-    const dateObj = new Date(date);
-
-    return `${dateObj.getDate() + 1}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
-  }
-
   render() {
     const {
       date,
@@ -42,15 +36,19 @@ class Trade extends Component {
     return (
       <tr>
         <td>
-          Fund: {fund_id}
+          {fund_id}
         </td>
         <td>
-          Shares: {shares}
+          {
+            <FormattedNumber
+              value={shares}
+            />
+          }
         </td>
         <td>
-          Date: {
+          {
             <FormattedDate
-              value={new Date()}
+              value={date}
               year="numeric"
               month="numeric"
               day="numeric"
@@ -58,7 +56,7 @@ class Trade extends Component {
           }
         </td>
         <td>
-          Kind: {kind}
+          {kind}
         </td>
         <td>
           <button

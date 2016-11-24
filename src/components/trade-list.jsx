@@ -23,7 +23,7 @@ class TradeList extends Component {
   render() {
     return(
       <table className="striped">
-        <thead>
+        <thead className="text-center">
           <tr>
             <th>Fund</th>
             <th>Shares</th>

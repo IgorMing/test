@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
 
 import { getTrades } from '../actions/trades';
 import ProfileContent from '../components/profile-content';
