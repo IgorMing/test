@@ -3,6 +3,7 @@ module.exports = {
     contentBase: './',
     historyApiFallback: true,
   },
+  devtool: 'source-map',
   entry: [
     'babel-polyfill',
     './src/index.jsx',
